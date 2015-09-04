@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
-	while (TRUE) {
+	while (true) {
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read <= 0) {
 			if (bytes_read < 0) {
@@ -55,5 +55,7 @@ int main(int argc, char **argv)
 			exit(1);
 		}
 	}
+
+	exit(0);
 }
 
