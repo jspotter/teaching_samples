@@ -7,7 +7,7 @@ int main()
 {
 	string line;
 	stringstream ss;
-	int x, y, z;
+	int x = 0, y = 0, z = 0;
 	
 	cout << "Give me some numbers: ";
 	getline(cin, line);
@@ -16,6 +16,7 @@ int main()
 	ss >> x >> y >> z;
 
 	cout << "The sum is " << (x + y + z) << endl;
+	cout << "The original line was " << line << endl;
 
 	return 0;
 }

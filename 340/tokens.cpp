@@ -24,8 +24,13 @@ int main()
 	getline(cin, temp);
 	ss << temp;
 
-	while (getline(ss, temp, ' ')) {
-		nums.push_back(stoi(temp));
+	while (true) {
+		int next_num;
+		ss >> next_num;
+
+		if (ss.fail()) break;
+
+		nums.push_back(next_num);
 	}
 
 	cout << "The sum is " << vector_sum(nums) << endl;
