@@ -11,12 +11,14 @@ ssize_t write_all(int fd, void *buffer, ssize_t num_bytes)
 	ssize_t total_bytes_written = 0, bytes_written = 0;
 
 	while (total_bytes_written < num_bytes) {
-		bytes_written = write(fd, &buffer[bytes_written], num_bytes - bytes_written);
+		bytes_written = write(fd, &buffer[total_bytes_written], num_bytes - total_bytes_written);
 		if (bytes_written < 0) {
 			return bytes_written;
+		} else if (bytes_written == 0) {
+			return total_bytes_written;
 		}
 
-		total_bytes_written += num_bytes;
+		total_bytes_written += bytes_written;
 	}
 
 	return total_bytes_written;
