@@ -23,6 +23,7 @@ void parent_handler(int _unused)
 
 int main(int argc, char **argv)
 {
+	// What happens when we get rid of signal masking?
 	sigemptyset(&mask);
 	sigaddset(&mask, SIGUSR1);
 	sigprocmask(SIG_BLOCK, &mask, NULL);
