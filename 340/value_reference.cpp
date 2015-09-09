@@ -9,10 +9,10 @@ struct Student
 	string year_in_school;
 };
 
-void some_function(Student &s)
+void some_function(const Student &s)
 {
-	s.name = "George Clooney";
-	s.age = 0;
+	// s.name = "George Clooney";
+	// s.age = 0;
 	cout << "name: " << s.name << ", age: " << s.age
 		 << ", year in school: " << s.year_in_school << endl;
 }
