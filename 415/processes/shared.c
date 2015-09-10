@@ -10,6 +10,7 @@ int main(int argc, char **argv)
 {
 	int shm_id = shmget(IPC_PRIVATE , SHARED_BUFFER_SIZE, S_IRUSR | S_IWUSR);
 	char *shared_memory = (char *) shmat(shm_id, NULL, 0);
+	sprintf(shared_memory, "%s", "I'm garbage data!");
 
 	pid_t pid = fork();
 	if (pid == 0) {
@@ -23,10 +24,8 @@ int main(int argc, char **argv)
 		}
 
 		printf("%s\n", shared_memory);
+		shmdt(shared_memory);
 	}
-
-	// BOTH the parent and the child execute at this point!
-	shmdt(shared_memory);
 
 	exit(0);
 }
