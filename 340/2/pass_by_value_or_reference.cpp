@@ -14,6 +14,8 @@ struct MyStruct
 	vector<int> v1, v2, v3;
 };
 
+// If you pass s by reference, this function is fast.
+// If you pass it by value, it is slow.
 void my_function(MyStruct &s) {
 	// do nothing
 }

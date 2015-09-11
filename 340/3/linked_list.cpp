@@ -10,7 +10,7 @@ LinkedList::~LinkedList() {
 	while (current != NULL) {
 		LinkedListNode *temp = current;
 		current = current->next;
-		delete current;
+		delete temp;
 	}
 }
 
@@ -47,7 +47,7 @@ int LinkedList::pop() {
 	return -1;
 }
 
-void LinkedList::remove(LinkedListNode *node) {
+void LinkedList::remove(LinkedListNode *node, int *return_value) {
 	if (this->start == node) {
 		this->start = node->next;
 	} else if (node->prev != NULL) {
