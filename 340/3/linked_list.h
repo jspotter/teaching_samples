@@ -1,3 +1,6 @@
+#ifndef _LINKED_LIST_H
+#define _LINKED_LIST_H
+
 #include <cstdlib>
 using namespace std;
 
@@ -30,4 +33,6 @@ private:
 
 	void remove(LinkedListNode *node);
 };
+
+#endif
 
