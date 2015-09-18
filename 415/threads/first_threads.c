@@ -8,7 +8,7 @@ const unsigned int NUM_THREADS = 3;
 
 void *thread_func(void *data)
 {
-	unsigned long id = (unsigned int) data;
+	unsigned long id = (unsigned long) data;
 	for (unsigned int i = 1; i <= NUM_PRINTS; i++) {
 		printf("Thread %lu: %u\n", id, i);
 	}

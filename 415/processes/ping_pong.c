@@ -1,7 +1,10 @@
+#define _POSIX_SOURCE
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
+#include <sys/types.h>
 #include <stdbool.h>
 
 static sigset_t mask;

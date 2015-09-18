@@ -5,7 +5,15 @@ using namespace std;
 
 typedef int
 
-void merge(vector<int>
+void merge(vector<int> & first, vector<int> & second, vector<int> & result)
+{
+	// TODO: fill this in
+}
+
+void printVector(const vector<int> & v)
+{
+	// TODO: fill this in
+}
 
 int main()
 {
@@ -13,7 +21,7 @@ int main()
 	vector<int> secondVector = vector<int>({ 130, 155, 178, 190, 200 });
 	vector<int> mergedVector = vector<int>();
 
-	merge(
+	merge(firstVector, secondVector, mergedVector);
 	printVector(mergedVector);
 
 	return 0;
