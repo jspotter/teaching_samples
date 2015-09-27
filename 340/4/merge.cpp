@@ -3,8 +3,6 @@
 #include <vector>
 using namespace std;
 
-typedef int
-
 void merge(const vector<int> & first, const vector<int> & second,
 					 vector<int> & result)
 {
@@ -24,8 +22,6 @@ void merge(const vector<int> & first, const vector<int> & second,
 				break;
 			}
 		}
-
-
 
 		int lh;
 		int rh;
@@ -65,6 +61,10 @@ void merge(const vector<int> & first, const vector<int> & second,
 			lh++;
 		}
 	}
+
+void merge(vector<int> & first, vector<int> & second, vector<int> & result)
+{
+	// TODO: fill this in
 }
 
 void printVector(const vector<int> & v)
