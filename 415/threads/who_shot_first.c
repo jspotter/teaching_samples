@@ -7,7 +7,6 @@
 #include <time.h>
 
 static pthread_t han_solo, greedo;
-static sigset_t signal_mask;
 static sem_t semaphore;
 
 void sighand(int signo)
@@ -28,7 +27,7 @@ void *han_solo_function(void *_unused)
 {
 	sem_wait(&semaphore);
 
-	usleep(rand() % 1000000);
+	usleep(rand() % 1110000);
 	pthread_kill(greedo, SIGALRM);
 	pthread_exit(0);
 }
