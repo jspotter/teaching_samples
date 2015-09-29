@@ -1,28 +1,34 @@
+#define _POSIX_SOURCE
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <time.h>       // for time
 
 static const unsigned int kNumPhilosophers = 5;
 static const unsigned int kNumForks = kNumPhilosophers;
 static const unsigned int kNumMeals = 3;
 static pthread_mutex_t forks[kNumForks];
-static unsigned int numAllowed = kNumPhilosophers - 1; // impose limit to avoid deadlock
-static pthread_mutex_t numAllowedLock;
 
 static int getSleepTime()
 {
-	return rand() % 20000;
+	return rand() % 200000;
 }
 
 static int getEatTime()
 {
-	return rand() % 10000;
+	return rand() % 100000;
 }
 
 static int getThinkTime()
 {
-	return rand() % 30000;
+	return rand() % 300000;
+}
+
+static int getPickupDelayTime()
+{
+	return 200000;
 }
 
 static void think(unsigned int id) {
@@ -31,35 +37,17 @@ static void think(unsigned int id) {
 	printf("%u all done thinking.\n", id);
 }
 
-static void waitForPermission() {
-	while (1) {
-		pthread_mutex_lock(&numAllowedLock);
-		if (numAllowed > 0) break;
-		pthread_mutex_unlock(&numAllowedLock);
-		usleep(10);
-	}
-	numAllowed--;
-	pthread_mutex_unlock(&numAllowedLock);
-}
-
-static void grantPermission() {
-	pthread_mutex_lock(&numAllowedLock);
-	numAllowed++;
-	pthread_mutex_unlock(&numAllowedLock);
-}
-
 static void eat(unsigned int id) {
 	unsigned int left = id;
 	unsigned int right = (id + 1) % kNumForks;
-	waitForPermission();
 
 	pthread_mutex_lock(&forks[left]);
+	usleep(getPickupDelayTime());
 	pthread_mutex_lock(&forks[right]);
 	printf("%u starts eating om nom nom nom.\n", id);
 	
 	usleep(getEatTime());
 	printf("%u all done eating.\n", id);
-	grantPermission();
 	pthread_mutex_unlock(&forks[left]);
 	pthread_mutex_unlock(&forks[right]);
 }
@@ -75,9 +63,9 @@ static void *philosopher(void *data)
 
 int main(int argc, char **argv)
 {
+	srand(time(NULL));
 	pthread_t philosophers[kNumPhilosophers];
 
-	pthread_mutex_init(&numAllowedLock, NULL);
 	for (unsigned int i = 0; i < kNumForks; i++) {
 		pthread_mutex_init(&forks[i], NULL);
 	}

@@ -9,8 +9,8 @@
 #include <strings.h>     // for bzero
 #include <time.h>        // for time
 
-const int NUM_TASKS = 30;
-const int NUM_THREADS = 10;
+static const int NUM_TASKS = 30;
+static const int NUM_THREADS = 10;
 
 static int tasks[NUM_TASKS];
 static pthread_mutex_t lock;
