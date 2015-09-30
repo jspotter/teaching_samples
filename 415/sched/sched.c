@@ -15,10 +15,14 @@ static int dummy = 0;
 
 static void *runner(void *_unused)
 {
+	/* For setting scheduler affinity. Only use CPU 1. */
 	cpu_set_t cpu;
 	CPU_ZERO(&cpu);
 	CPU_SET(1, &cpu);
 
+	sched_setaffinity(0, sizeof(cpu_set_t), &cpu);
+
+	/* Make sure our schedule policy was set correctly */
 	int policy;
 	struct sched_param param;
 	pthread_getschedparam(pthread_self(), &policy, &param);
@@ -26,8 +30,7 @@ static void *runner(void *_unused)
 	printf("policy: %d\n", policy);
 	printf("should be %d\n", SCHED_TYPE);
 
-	sched_setaffinity(0, sizeof(cpu_set_t), &cpu);
-
+	/* Print some numbers, do some work */
 	for (int i = 1; i <= 10; i++) {
 		printf("%d\n", i);
 		for (int j = 0; j < 30000000; j++) {
@@ -36,23 +39,6 @@ static void *runner(void *_unused)
 	}
 
 	return NULL;
-}
-
-static void print_current_policy(pthread_attr_t *attr)
-{
-	int policy;
-
-	if (pthread_attr_getschedpolicy(attr, &policy) != 0) {
-		fprintf(stderr, "Unable to get policy.\n");
-	} else {
-		if (policy == SCHED_OTHER) {
-			printf("SCHED_OTHER: %d\n", policy);
-		} else if (policy == SCHED_RR) {
-			printf("SCHED_RR: %d\n", policy);
-		} else if (policy == SCHED_FIFO) {
-			printf("SCHED_FIFO: %d\n", policy);
-		}
-	}
 }
 
 int main(int argc, char **argv)
@@ -64,10 +50,14 @@ int main(int argc, char **argv)
 	struct sched_param param;
 
 	pthread_attr_init(&attr);
-	
+
+	/* Make sure threads we create actually read the attrs we set */	
 	pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED);
+
+	/* Set the scheduling type */
 	pthread_attr_setschedpolicy(&attr, SCHED_TYPE);
 	
+	/* Set the priority of all threads to be equal */
 	max_prio = sched_get_priority_max(SCHED_TYPE);	
   	min_prio = sched_get_priority_min(SCHED_TYPE);	
   	mid_prio = (min_prio + max_prio)/2;	
