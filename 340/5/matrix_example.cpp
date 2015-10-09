@@ -46,6 +46,9 @@ int main()
 	Matrix mProd = m3 * m4;
 	mProd.print();
 
+	Matrix mNeg = -m2;
+	mNeg.print();
+
 	return 0;
 }
 

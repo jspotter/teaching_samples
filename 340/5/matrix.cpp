@@ -66,6 +66,18 @@ const Matrix Matrix::operator*(const Matrix& other) const throw(MatrixMultiplica
 	return result;
 }
 
+const Matrix Matrix::operator-() const
+{
+	Matrix result(nRows, nCols);
+	for (int row = 0; row < nRows; row++) {
+		for (int col = 0; col < nCols; col++) {
+			result.set(row, col, -get(row, col));
+		}
+	}
+
+	return result;
+}
+
 void Matrix::print() const
 {
 	cout << "[" << endl;

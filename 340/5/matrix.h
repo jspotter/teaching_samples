@@ -77,6 +77,7 @@ class Matrix
 		// Matrix operations
 		const Matrix operator+(const Matrix& other) const throw (MatrixAdditionException);
 		const Matrix operator*(const Matrix& other) const throw (MatrixMultiplicationException);
+		const Matrix operator-() const;
 
 		// Print this matrix to the console
 		void print() const;
