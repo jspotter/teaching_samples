@@ -9,6 +9,13 @@ int main()
 
 	Matrix m1, m2(3, 4), m3(3, 4), m4(4, 3);
 
+	m2.set(0, 0, 3);
+	m2.set(0, 1, 4);
+	m2.set(0, 2, 5);
+
+	cout << m2 << endl;
+	cout << "-----" << endl;
+
 	m1.print();
 	m2.print();
 	m3.print();

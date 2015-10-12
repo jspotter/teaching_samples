@@ -1,5 +1,5 @@
 #include "matrix.h"
-#include <iostream>
+#include <sstream>
 using namespace std;
 
 Matrix::Matrix() : nRows(0), nCols(0) {}
@@ -78,16 +78,30 @@ const Matrix Matrix::operator-() const
 	return result;
 }
 
+ostream& operator<< (ostream& o, const Matrix& m)
+{
+	o << m.toString();
+	return o;
+}
+
 void Matrix::print() const
 {
-	cout << "[" << endl;
+	cout << toString();
+}
+
+string Matrix::toString()
+{
+	stringstream ss;
+	ss << "[" << endl;
 	for (int row = 0; row < nRows; row++) {
 		for (int col = 0; col < nCols; col++) {
-			cout << matrix.at(pair<int, int>(row, col)) << "   ";
+			ss << matrix.at(pair<int, int>(row, col)) << "   ";
 		}
-		cout << endl;
+		ss << endl;
 	}
-	cout << "]" << endl;
+	ss << "]" << endl;
+
+	return ss.str();
 }
 
 int Matrix::rowTimesColumn(const Matrix& other, int row, int col) const

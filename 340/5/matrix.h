@@ -4,6 +4,7 @@
 #include <map>
 #include <utility>
 #include <exception>
+#include <iostream>
 
 /*
  * In .h files, we do NOT say
@@ -78,6 +79,7 @@ class Matrix
 		const Matrix operator+(const Matrix& other) const throw (MatrixAdditionException);
 		const Matrix operator*(const Matrix& other) const throw (MatrixMultiplicationException);
 		const Matrix operator-() const;
+		friend std::ostream& operator<< (std::ostream& o, const Matrix &m);
 
 		// Print this matrix to the console
 		void print() const;
@@ -86,6 +88,7 @@ class Matrix
 		std::map<std::pair<int, int>, int> matrix;
 
 		int rowTimesColumn(const Matrix& other, int row, int col) const;
+		std::string toString() const;
 };
 
 #endif
