@@ -4,19 +4,16 @@
 #include <vector>
 using namespace std;
 
-bool IsOdd(int i)
-{
-	return i % 2 == 1;
-}
-
 int main()
 {
 	vector<int> myVector;
 	for (int i = 0; i < 10; i++) {
-		myVector.push_back(i * 10);
+		myVector.push_back(i * 3);
 	}
 
-	vector<int>::iterator iter = find_if(myVector.begin(), myVector.end(), IsOdd);
+	vector<int>::iterator iter = find_if(myVector.begin(), myVector.end(), [] (int i) -> bool {
+		return i % 2 == 1;
+	});
 	if (iter != myVector.end())
 		cout << "The first odd value is: " << *iter << endl;
 	else

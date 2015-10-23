@@ -68,8 +68,14 @@ void capitalize_a_string()
 	// Where do I start? s.begin()!
 	// Where do I finish? s.end()!
 	// Where do I put the result? s.begin()!
-	// What do I do to each letter? ::tolower!
-	transform(s.begin(), s.end(), s.begin(), ::tolower);
+	// What do I do to each letter? ::toupper!
+	transform(s.begin(), s.end(), s.begin(), [] (char c) -> char {
+		if (c >= 'a' && c <= 'z') {
+			return c - 'a' + 'A';
+		}
+
+		return c;
+	});
 
 	cout << "capitalized string: " << s << endl;
 }
