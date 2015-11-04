@@ -42,5 +42,12 @@ int main()
 	t2.print();
 	t3.print();
 
+	Tree *t4 = new Tree();
+	t4->push(10);
+	t4->push(8);
+	t4->push(9);
+
+	delete t4;
+
 	return 0;
 }

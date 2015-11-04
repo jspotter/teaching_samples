@@ -1,0 +1,28 @@
+Person
+-----
+name: Name
+age: Age
+gender: Gender
+summary: Summary
+
+Person
+-----
+name: Jonathan
+age: 25
+gender: M
+summary: Hi I'm Jonathan
+
+Person
+-----
+name: Greg
+age: 120
+gender: M
+summary: Hi I'm Greg
+
+Person
+-----
+name: Nancy
+age: 3
+gender: F
+summary: Hi I'm Nancy
+

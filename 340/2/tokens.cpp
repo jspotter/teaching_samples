@@ -21,14 +21,12 @@ int main()
 	string temp;
 
 	cout << "Give me some numbers: ";
-	getline(cin, temp);
-	ss << temp;
 
 	while (true) {
 		int next_num;
-		ss >> next_num;
+		cin >> next_num;
 
-		if (ss.fail()) break;
+		if (cin.fail()) break;
 
 		nums.push_back(next_num);
 	}

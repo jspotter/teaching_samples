@@ -25,7 +25,7 @@ public:
 	Node* find(int value) const;
 	void print() const;
 
-private:
+protected:
 	Node* start;
 
 	void copyOther(const Tree& other);
