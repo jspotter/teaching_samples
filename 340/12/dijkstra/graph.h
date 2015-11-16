@@ -112,105 +112,143 @@ public:
 	 * Common graph operations.
 	 */
 	Node<T>* insert(const T& value) {
-		if (values.find(value) != values.end()) {
+		if (nodes.find(value) != nodes.end()) {
 			return NULL;
 		}
 
 		Node<T>* newNode = new Node<T>(value);
-		values[value] = newNode;
-		nodes.push_back(newNode);
+		nodes[value] = newNode;
 		return newNode;
 	}
 
+	// Two versions of connect! One that takes
+	// node pointers, another that takes node
+	// values.
 	void connect(Node<T>* first, Node<T>* second) {
 		first->adjacents.insert(second);
 		second->adjacents.insert(first);
 	}
 
+	void connect(const T& first, const T& second) {
+		if (nodes.find(first) == nodes.end() ||
+		    nodes.find(second) == nodes.end()) {
+			throw NonExistentNodeException();
+		}
+
+		connect(nodes[first], nodes[second]);
+	}
+
 	void unmarkAll() {
-		for (int i = 0; i < nodes.size(); i++) {
-			nodes[i]->marked = false;
+		for (auto iter = nodes.begin();
+		     iter != nodes.end();
+				 iter++) {
+			iter->second->marked = false;
 		}
 	}
 
 	void print() {
-		for (int i = 0; i < nodes.size(); i++) {
-			std::cout << nodes[i]->value << ": ";
-			for (auto iter = nodes[i]->adjacents.begin();
-			          iter != nodes[i]->adjacents.end();
-								++iter) {
+		for (auto iter = nodes.begin();
+		     iter != nodes.end();
+				 iter++) {
+			std::cout << iter->first << ": ";
 
-				std::cout << (*iter)->value << " ";
+			for (auto neighborsIter = iter->second->adjacents.begin();
+			          neighborsIter != iter->second->adjacents.end();
+								neighborsIter++) {
+
+				std::cout << (*neighborsIter)->value << " ";
 			}
 			std::cout << std::endl;
 		}
 	}
 
 	std::vector<Node<T>*> shortestPath(const T& start, const T& end) {
-		if (values.find(start) == values.end() ||
-		    values.find(end) == values.end()) {
-			throw NonExistentNodeException();
-		}
+		// Make sure both nodes exist! If one doesn't, throw
+		// the appropriate exception.
 
-		std::deque<std::vector<Node<T>*> > paths;
-		unmarkAll();
 
-		Node<T>* startNode = values[start];
-		Node<T>* endNode = values[end];
+		// Ok, both nodes exist. Get the node pointers from
+		// your unordered_map!
 
-		startNode->marked = true;
-		std::vector<Node<T>*> startPath;
-		startPath.push_back(startNode);
 
-		paths.push_back(startPath);
+		// You will need some way to store partial paths.
+		// I highly recommend representing a partial
+		// path as a vector of node pointers, since this
+		// is what you will ultimately be returning.
+		//
+		// I would ALSO recommend using a deque to store
+		// all your partial paths. (A deque is
+		// shorthand for double-ended queue. It's part
+		// of the STL.
+		//
+		// If you choose to use a deque (which you should),
+		// you'll have a deque of vectors, where each vector
+		// in turn contains node pointers. Kind of
+		// complicated! But effective!
 
-		while (!paths.empty()) {
-			std::vector<Node<T>*> currentPath = paths[0];
-			paths.pop_front();
 
-			Node<T>* lastNode = currentPath[currentPath.size() - 1];
-			for (auto iter = lastNode->adjacents.begin();
-			          iter != lastNode->adjacents.end();
-								++iter) {
-				Node<T>* nextNode = *iter;
+		// Don't forget to unmark your nodes!
 
-				if (!nextNode->marked) {
-					nextNode->marked = true;
-					std::vector<Node<T>*> nextPath(currentPath);
-					nextPath.push_back(nextNode);
 
-					if (nextNode->value == end) {
-						return nextPath;
-					}
+		// Your first partial path will just contain one
+		// node - the start node. Not much of a path, but
+		// you have to start somewhere!
 
-					paths.push_back(nextPath);
-				}
-			}
-		}
 
-		throw NoPathException();
+		// Now, repeatedly do the following:
+		//    1. Get the topmost partial path.
+		//    2. Look at every node you can get to from
+		//       the end of that partial path (ignoring
+		//       nodes you've already seen).
+		//    3. Create a partial path that has the same
+		//       nodes as the current partial path, PLUS
+		//       one more node (the node that you're
+		//       looking at).
+		//    4. Store those partial paths at the end.
+		//
+		// You stop when:
+		//    - You see the end node in step 2. Put the
+		//      end node at the end of the current partial
+		//      path, and then return the partial (now
+		//      complete) path!
+		//    - You run out of partial paths to look at.
+		//      If this ever happens, that means there is
+		//      no path to the end node. Throw the 
+		//      appropriate exception.
+
 	}
 
 private:
-	std::vector<Node<T>*> nodes;
-	std::unordered_map<T, Node<T>*> values;  // for uniqueness and lookup
+	std::unordered_map<T, Node<T>*> nodes;  // for uniqueness and lookup
 
 	void copyOther(const Graph<T>& other) {
-		for (int i = 0; i < other.nodes.size(); i++) {
-			insert(other.nodes[i]->value);
+		for (auto iter = other.nodes.begin();
+		     iter != other.nodes.end();
+				 iter++) {
+			insert(iter->first);
 		}
 
-		for (int i = 0; i < other.nodes.size(); i++) {
-			auto adjacents = other.nodes[i]->adjacents;
-			for (auto iter = adjacents.begin(); iter != adjacents.end(); ++iter) {
-				values[other.nodes[i]->value]->adjacents.insert(values[(*iter)->value]);
+		for (auto iter = other.nodes.begin();
+		     iter != other.nodes.end();
+				 iter++) {
+			auto adjacents = iter->second->adjacents;
+			for (auto neighborsIter = adjacents.begin();
+			     neighborsIter != adjacents.end();
+					 ++neighborsIter) {
+				// Need to connect the values here!
+				// Connecting iter->second and *neighborsIter
+				// would re-connect the nodes in the old graph
+				// (so this would do nothing)
+				connect(iter->first, (*neighborsIter)->value);
 			}
 		}
 	}
 
 	void clear() {
-		for (int i = 0; i < nodes.size(); ++i) {
-			delete nodes[i];
+		for (auto iter = nodes.begin();
+		     iter != nodes.end();
+				 iter++) {
+			delete iter->second;
 		}
 
 		nodes.clear();
