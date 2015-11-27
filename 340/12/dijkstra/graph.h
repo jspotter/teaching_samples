@@ -216,6 +216,10 @@ public:
 		//      no path to the end node. Throw the 
 		//      appropriate exception.
 
+
+		// This method returns an empty vector for now.
+		// Get rid of this line!
+		return std::vector<Node<T>*>();
 	}
 
 private:
