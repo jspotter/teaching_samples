@@ -1,12 +1,13 @@
 #include "linked_list.h"
+using namespace std;
 
 LinkedList::LinkedList() {
-	this->start = NULL;
-	this->end = NULL;
+	start = NULL;
+	end = NULL;
 }
 
 LinkedList::~LinkedList() {
-	LinkedListNode *current = this->start;
+	LinkedListNode* current = start;
 	while (current != NULL) {
 		LinkedListNode *temp = current;
 		current = current->next;
@@ -14,52 +15,57 @@ LinkedList::~LinkedList() {
 	}
 }
 
-void LinkedList::push(int val) {
-	LinkedListNode *new_node = new LinkedListNode();
-	new_node->value = val;
-	new_node->next = NULL;
-	new_node->prev = this->end;
+void LinkedList::insertAtEnd(int val) {
+	LinkedListNode* newNode = new LinkedListNode();
+	newNode->value = val;
+	newNode->next = NULL;
+	newNode->prev = end;
 
-	if (this->end != NULL) {
-		this->end->next = new_node;
+	if (end != NULL) {
+		end->next = newNode;
 	} else {
-		this->start = new_node;
+		start = newNode;
 	}
 
-	this->end = new_node;
+	end = newNode;
 }
 
-int LinkedList::peek() {
-	if (this->end != NULL) {
-		return this->end->value;
+void LinkedList::insertAtBeginning(int val) {
+	LinkedListNode* newNode = new LinkedListNode();
+	newNode->value = val;
+	newNode->next = start;
+	newNode->prev = NULL;
+
+	if (start != NULL) {
+		start->prev = newNode;
+	} else {
+		end = newNode;
 	}
 
-	return -1;
+	start = newNode;
 }
 
-int LinkedList::pop() {
-	if (this->end != NULL) {
-		int val = this->end->value;
-		remove(this->end);
-		return val;
+int LinkedList::valueAtEnd() {
+	if (end != NULL) {
+		return end->value;
 	}
 
-	return -1;
+	throw LinkedListEmptyException();
 }
 
-void LinkedList::remove(LinkedListNode *node, int *return_value) {
-	if (this->start == node) {
-		this->start = node->next;
-	} else if (node->prev != NULL) {
-		node->prev->next = node->next;
+void LinkedList::removeAtEnd() {
+	if (end == NULL) {
+		return;
 	}
 
-	if (this->end == node) {
-		this->end = node->prev;
-	} else if (node->next != NULL) {
-		node->next->prev = node->prev;
+	if (end->prev != NULL) {
+		end->prev->next = NULL;
+	} else {
+		start = NULL;
 	}
 
-	delete node;
+	LinkedListNode* temp = end;
+	end = end->prev;
+	delete temp;
 }
 

@@ -1,15 +1,15 @@
 #ifndef _TREE_H
 #define _TREE_H
 
-#include <cstdlib>
+#include <cstdlib>   // necessary in order to use NULL
 
-struct Node
+class TreeNode
 {
-	// Structs can have constructors too!
-	Node() : left(NULL), right(NULL) {}
+public:
+	TreeNode() : left(NULL), right(NULL) {}
 
-	Node* left;
-	Node* right;
+	TreeNode* left;
+	TreeNode* right;
 	int value;
 };
 
@@ -22,18 +22,19 @@ public:
 	Tree& operator=(const Tree& other);
 
 	void push(int value);
-	Node* find(int value) const;
+	TreeNode* find(int value) const;
 	void print() const;
 
 private:
-	Node* start;
+	TreeNode* start;
 
 	void copyOther(const Tree& other);
 	void clear();
-	Node* findFrom(int value, Node* start) const;
-	void printFrom(Node* start, int numSpaces) const;
-	void copyFrom(Node* start);
-	void clearFrom(Node* start);
+	void pushFrom(TreeNode* startingPoint, TreeNode* nodeToPush);
+	TreeNode* findFrom(TreeNode* startingPoint, int value) const;
+	void printFrom(TreeNode* startintPoint, int numSpaces) const;
+	void copyFrom(TreeNode* startintPoint);
+	void clearFrom(TreeNode* startingPoint);
 };
 
 #endif

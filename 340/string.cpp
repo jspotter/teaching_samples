@@ -13,6 +13,10 @@ int main()
 		cout << "not equal!" << endl;
 	}
 
+	for (char c : one) {
+		cout << c << endl;
+	}
+
 
 	return 0;
 }

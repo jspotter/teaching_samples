@@ -6,15 +6,15 @@ struct Student
 {
 	string name;
 	int age;
-	string year_in_school;
+	string yearInSchool;
 };
 
-void some_function(const Student &s)
+void someFunction(Student s)
 {
-	// s.name = "George Clooney";
-	// s.age = 0;
+	s.name = "George Clooney";
+	s.age = 0;
 	cout << "name: " << s.name << ", age: " << s.age
-		 << ", year in school: " << s.year_in_school << endl;
+		 << ", year in school: " << s.yearInSchool << endl;
 }
 
 int main()
@@ -22,15 +22,15 @@ int main()
 	Student me;
 	me.name = "Jonathan";
 	me.age = 100;
-	me.year_in_school = "what is school?";
+	me.yearInSchool = "what is school?";
 
 	cout << "name: " << me.name << ", age: " << me.age
-		 << ", year in school: " << me.year_in_school << endl;
+		 << ", year in school: " << me.yearInSchool << endl;
 	
-	some_function(me);
+	someFunction(me);
 
 	cout << "name: " << me.name << ", age: " << me.age
-		 << ", year in school: " << me.year_in_school << endl;
+		 << ", year in school: " << me.yearInSchool << endl;
 
 	return 0;
 }

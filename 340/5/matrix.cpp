@@ -34,7 +34,7 @@ void Matrix::set(int row, int col, int val)
 	matrix[pair<int, int>(row, col)] = val;
 }
 
-const Matrix Matrix::operator+(const Matrix& other) const throw(MatrixAdditionException)
+Matrix Matrix::operator+(const Matrix& other) const
 {
 	if (other.numRows() != nRows || other.numCols() != nCols) {
 		throw MatrixAdditionException();
@@ -50,7 +50,7 @@ const Matrix Matrix::operator+(const Matrix& other) const throw(MatrixAdditionEx
 	return result;
 }
 
-const Matrix Matrix::operator*(const Matrix& other) const throw(MatrixMultiplicationException)
+Matrix Matrix::operator*(const Matrix& other) const
 {
 	if (other.numRows() != nCols) {
 		throw MatrixMultiplicationException();
@@ -66,7 +66,7 @@ const Matrix Matrix::operator*(const Matrix& other) const throw(MatrixMultiplica
 	return result;
 }
 
-const Matrix Matrix::operator-() const
+Matrix Matrix::operator-() const
 {
 	Matrix result(nRows, nCols);
 	for (int row = 0; row < nRows; row++) {
@@ -89,7 +89,7 @@ void Matrix::print() const
 	cout << toString();
 }
 
-string Matrix::toString()
+string Matrix::toString() const
 {
 	stringstream ss;
 	ss << "[" << endl;

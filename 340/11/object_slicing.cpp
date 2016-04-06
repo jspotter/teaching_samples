@@ -8,7 +8,7 @@ public:
     void move(void) { 
         cout << "This animal moves in some way" << endl; 
     }
-    virtual void eat(void) {}
+    virtual void eat(void) = 0;
 };
 
 // The class "Animal" may possess a definition for eat() if desired.
@@ -33,12 +33,12 @@ public:
 
 int main()
 {
-	Animal animal;
+	// Animal animal;
 	Llama llama;
 	Wolf wolf;
 
-	animal.move();
-	animal.eat();
+	// animal.move();
+	// animal.eat();
 	
 	llama.move();
 	llama.eat();
@@ -48,7 +48,7 @@ int main()
 
 	cout << "-----" << endl;
 
-	vector<Animal> v;
+	/* vector<Animal> v;
 	v.push_back(animal);
 	v.push_back(llama);
 	v.push_back(wolf);
@@ -56,6 +56,18 @@ int main()
 	for (int i = 0; i < v.size(); i++) {
 		v[i].move();
 		v[i].eat();
+	}
+
+	*/
+
+	vector<Animal*> v2;
+	// v2.push_back(new Animal());
+	v2.push_back(new Llama());
+	v2.push_back(new Wolf());
+
+	for (int i = 0; i < v2.size(); i++) {
+		v2[i]->move();
+		v2[i]->eat();
 	}
 
 	return 0;

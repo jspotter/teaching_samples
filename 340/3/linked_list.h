@@ -1,11 +1,19 @@
 #ifndef _LINKED_LIST_H
 #define _LINKED_LIST_H
 
-#include <cstdlib>
-using namespace std;
+#include <exception>
 
-struct LinkedListNode
+class LinkedListEmptyException : public std::exception
 {
+public:
+	virtual const char* what() const throw() {
+		return "Cannot get value from empty linked list.";
+	}
+};
+
+class LinkedListNode
+{
+public:
 	LinkedListNode *prev;
 	LinkedListNode *next;
 	int value;
@@ -17,21 +25,15 @@ public:
 	LinkedList();
 	~LinkedList();
 	
-	void push(int val);
-	bool insert_at(int val, int idx);
+	void insertAtEnd(int val);
+	void insertAtBeginning(int val);
 
-	int peek();
-	int pop();
-	int retrieve_at(int idx);
-	bool remove_at(int idx);
-
-	LinkedListNode *find(int val);
+	int valueAtEnd();
+	void removeAtEnd();
 
 private:
 	LinkedListNode *start;
 	LinkedListNode *end;
-
-	void remove(LinkedListNode *node);
 };
 
 #endif

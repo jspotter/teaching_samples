@@ -6,11 +6,12 @@ using namespace std;
 int main()
 {
 	LinkedList list;
-	list.push(5);
+	list.insertAtEnd(5);
+	list.insertAtBeginning(1);
 
-	cout << list.peek() << endl;
-	cout << list.pop() << endl;
-	cout << list.pop() << endl;
+	cout << list.valueAtEnd() << endl;
+	list.removeAtEnd();
+	cout << list.valueAtEnd() << endl;
 
 	return 0;
 }

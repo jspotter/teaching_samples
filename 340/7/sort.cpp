@@ -9,36 +9,36 @@ static const int LIST_MAX = 100;
 void merge(int list[], int lh, int pivot, int rh)
 {
 	int temp[rh - lh + 1];
-	int left_index = lh, right_index = pivot + 1, output_index = 0;
+	int leftIndex = lh, rightIndex = pivot + 1, outputIndex = 0;
 
-	while (left_index <= pivot && right_index <= rh) {
+	while (leftIndex <= pivot && rightIndex <= rh) {
 
 		// Append the smaller of the two numbers at the front of
 		// each of our two sublists
-		if (list[left_index] < list[right_index]) {
-			temp[output_index] = list[left_index];
-			left_index++;
+		if (list[leftIndex] < list[rightIndex]) {
+			temp[outputIndex] = list[leftIndex];
+			leftIndex++;
 		} else {
-			temp[output_index] = list[right_index];
-			right_index++;
+			temp[outputIndex] = list[rightIndex];
+			rightIndex++;
 		}
 
 		// Increment the output index regardless of which
 		// list we drew from
-		output_index++;
+		outputIndex++;
 	}
 
 	// Figure out which list still has numbers, and write
 	// them to the output array
-	if (left_index > pivot) {
-		for (int i = right_index; i <= rh; i++) {
-			temp[output_index] = list[i];
-			output_index++;
+	if (leftIndex > pivot) {
+		for (int i = rightIndex; i <= rh; i++) {
+			temp[outputIndex] = list[i];
+			outputIndex++;
 		}
-	} else if (right_index > rh) {
-		for (int i = left_index; i <= pivot; i++) {
-			temp[output_index] = list[i];
-			output_index++;
+	} else if (rightIndex > rh) {
+		for (int i = leftIndex; i <= pivot; i++) {
+			temp[outputIndex] = list[i];
+			outputIndex++;
 		}
 	}
 

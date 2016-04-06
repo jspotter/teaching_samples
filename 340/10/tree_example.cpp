@@ -4,6 +4,12 @@ using namespace std;
 
 int main()
 {
+	// This program uses assert to verify
+	// the correctness of the tree class.
+	// If something in a call to assert()
+	// is false, the program will crash on
+	// that line.
+
 	Tree t1, t2;
 	
 	t1.push(6);
@@ -16,7 +22,7 @@ int main()
 	Tree t3(t2);
 	t3.push(0);
 
-	Node* n;
+	TreeNode* n;
 	n = t1.find(5);
 	assert(n != NULL);
 	n = t2.find(5);
@@ -41,6 +47,13 @@ int main()
 	t1.print();
 	t2.print();
 	t3.print();
+
+	Tree *t4 = new Tree();
+	t4->push(10);
+	t4->push(8);
+	t4->push(9);
+
+	delete t4;
 
 	return 0;
 }

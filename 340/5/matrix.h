@@ -76,9 +76,9 @@ class Matrix
 		void set(int row, int col, int val);
 
 		// Matrix operations
-		const Matrix operator+(const Matrix& other) const throw (MatrixAdditionException);
-		const Matrix operator*(const Matrix& other) const throw (MatrixMultiplicationException);
-		const Matrix operator-() const;
+		Matrix operator+(const Matrix& other) const;
+		Matrix operator*(const Matrix& other) const;
+		Matrix operator-() const;
 		friend std::ostream& operator<< (std::ostream& o, const Matrix &m);
 
 		// Print this matrix to the console

@@ -1,21 +1,38 @@
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
+#include <vector>
 using namespace std;
+
+int getSum(const vector<int>& intsToSum) {
+	int sum = 0;
+	for (int next : intsToSum) {
+		sum += next;
+	}
+	return sum;
+}
 
 int main()
 {
 	string line;
 	stringstream ss;
-	int x = 0, y = 0, z = 0;
+	vector<int> listOfNumbers;
 	
 	cout << "Give me some numbers: ";
 	getline(cin, line);
 
 	ss << line;
-	ss >> x >> y >> z;
+	while (true) {
+		int next;
+		ss >> next;
+		if (ss.fail()) {
+			break;
+		}
 
-	cout << "The sum is " << (x + y + z) << endl;
+		listOfNumbers.push_back(next);
+	}
+
+	cout << "The sum is: " << getSum(listOfNumbers) << endl;
 	cout << "The original line was " << line << endl;
 
 	return 0;

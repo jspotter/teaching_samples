@@ -5,12 +5,14 @@ using namespace std;
 
 int main() {
 	string filename = "file1.txt";
-	ofstream is;
-	is.open(filename);
+	filename += "";
+	ofstream ofs(filename);
+	ifstream ifs(filename);
+	// ofs.open(filename);
 
-	is << "hi\n";
+	ofs << "hi\n";
 	
-	is.close();
+	ofs.close();
 
 
 	return 0;

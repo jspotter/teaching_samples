@@ -13,10 +13,10 @@ int main()
 	for (int i = 0; i < 1000000000; i++) {
 		
 		// Statically allocating a struct is fast!
-		MyStruct s;
+		// MyStruct s;
 
 		// Dynamically allocating a struct is slow!
-		// MyStruct* s = new MyStruct();
+		MyStruct* s = new MyStruct();
 	
 		// If you chose static allocation, your struct
 		// will go away once you get to the bottom of

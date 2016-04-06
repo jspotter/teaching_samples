@@ -26,37 +26,20 @@ Tree& Tree::operator=(const Tree& other)
 
 void Tree::push(int value)
 {
-	Node* pushed = new Node();
-	pushed->value = value;
+	TreeNode* newNode = new TreeNode();
+	newNode->value = value;
 
 	if (start == NULL) {
-		start = pushed;
-	} else {
-		Node* current = start;
-		while (true)
-		{
-			if (value < current->value) {
-				if (current->left == NULL) {
-					current->left = pushed;
-					break;
-				} else {
-					current = current->left;
-				}
-			} else {
-				if (current->right == NULL) {
-					current->right = pushed;
-					break;
-				} else {
-					current = current->right;
-				}
-			}
-		}
+		start = newNode;
+		return;
 	}
+	
+	pushFrom(start, newNode);
 }
 
-Node* Tree::find(int value) const
+TreeNode* Tree::find(int value) const
 {
-	return findFrom(value, start);
+	return findFrom(start, value);
 }
 
 void Tree::print() const
@@ -74,6 +57,37 @@ void Tree::clear()
 	clearFrom(start);
 }
 
+// pushFrom
+//
+// Recursively push a single element into a tree.
+void Tree::pushFrom(TreeNode* startingPoint, TreeNode* nodeToPush)
+{
+	if (startingPoint->value < nodeToPush->value) {
+		if (startingPoint->right == NULL) {
+			
+			// base case #1
+			startingPoint->right = nodeToPush;
+		} else {
+
+			// recursive call #1
+			pushFrom(startingPoint->right, nodeToPush);
+		}
+
+	// If we insert the same value twice, the second copy
+	// will to to the left of the first copy.
+	} else {
+		if (startingPoint->left == NULL) {
+
+			// base case #2
+			startingPoint->left = nodeToPush;
+		} else {
+
+			// recursive call #2
+			pushFrom(startingPoint->left, nodeToPush);
+		}
+	}
+}
+
 // findFrom
 //
 // Recursively find a single element in a tree.
@@ -82,18 +96,18 @@ void Tree::clear()
 // right or left depending on whether the value we
 // are looking for is bigger or smaller than the
 // node we are looking at.
-Node* Tree::findFrom(int value, Node* start) const
+TreeNode* Tree::findFrom(TreeNode* startingPoint, int value) const
 {
-	if (start == NULL) {
+	if (startingPoint == NULL) {
 		return NULL;
 	}
 
-	if (start->value == value) {
-		return start;
-	} else if (value < start->value) {
-		return findFrom(value, start->left);
+	if (startingPoint->value == value) {
+		return startingPoint;
+	} else if (value < startingPoint->value) {
+		return findFrom(startingPoint->left, value);
 	} else {
-		return findFrom(value, start->right);
+		return findFrom(startingPoint->right, value);
 	}
 }
 
@@ -121,9 +135,9 @@ Node* Tree::findFrom(int value, Node* start) const
 //     8
 //     12
 // 
-void Tree::printFrom(Node* start, int numSpaces) const
+void Tree::printFrom(TreeNode* startingPoint, int numSpaces) const
 {
-	if (start == NULL) {
+	if (startingPoint == NULL) {
 		return;
 	}
 
@@ -131,38 +145,38 @@ void Tree::printFrom(Node* start, int numSpaces) const
 		cout << " ";
 	}
 
-	cout << start->value << endl;
+	cout << startingPoint->value << endl;
 
-	printFrom(start->left, numSpaces + 2);
-	printFrom(start->right, numSpaces + 2);
+	printFrom(startingPoint->left, numSpaces + 2);
+	printFrom(startingPoint->right, numSpaces + 2);
 }
 
 // copyFrom
 //
 // Recursively copy another tree's nodes. Use
 // pre-order traversal.
-void Tree::copyFrom(Node* start)
+void Tree::copyFrom(TreeNode* startingPoint)
 {
-	if (start == NULL) {
+	if (startingPoint == NULL) {
 		return;
 	}
 
-	push(start->value);
-	copyFrom(start->left);
-	copyFrom(start->right);
+	push(startingPoint->value);
+	copyFrom(startingPoint->left);
+	copyFrom(startingPoint->right);
 }
 
 // clearFrom
 //
 // Recursively delete nodes. Use post-order traversal.
-void Tree::clearFrom(Node* start)
+void Tree::clearFrom(TreeNode* startingPoint)
 {
-	if (start == NULL) {
+	if (startingPoint == NULL) {
 		return;
 	}
 
-	clearFrom(start->left);
-	clearFrom(start->right);
-	delete start;
+	clearFrom(startingPoint->left);
+	clearFrom(startingPoint->right);
+	delete startingPoint;
 }
 
