@@ -17,7 +17,7 @@ int main()
 
 	cout << "-----" << endl;
 
-	transform(v.begin(), v.end(), v.begin(), [] (int i) -> int {
+	transform(v.begin(), v.begin() + 5, v.begin() + 9, [] (int i) -> int {
 		return -i;
 	});
 

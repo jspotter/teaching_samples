@@ -33,10 +33,10 @@ int main()
 	t2.print();
 	t.print();
 	
-	TreeNode *node = t.find(5);
-	cout << "found: " << node->value << endl;
+	//TreeNode *node = t.find(5);
+	//cout << "found: " << node->value << endl;
 
-	node = t.find(100000);
-	cout << "t.find(100000): " << node << endl;
+	//node = t.find(100000);
+	//cout << "t.find(100000): " << node << endl;
 }
 

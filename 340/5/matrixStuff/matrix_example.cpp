@@ -39,6 +39,23 @@ int main() {
 
 	cout << m2.get(0, 0) << endl;
 
+	cout << "-- Copy Constructor --" << endl;
+	Matrix m6(m5);
+
+	m6.set(0, 0, 100);
+
+	cout << m5 << endl;
+	cout << m6 << endl;
+
+	cout << "-- Assignment Operator --" << endl;
+	m6 = m4;
+
+	cout << m6 << endl;
+	m5.set(0, 0, 30);
+
+	cout << m5 << endl;
+	cout << m6 << endl;
+
 	return 0;
 }
 

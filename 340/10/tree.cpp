@@ -4,7 +4,7 @@ using namespace std;
 
 Tree::Tree() : start(NULL) {}
 
-Tree::Tree(const Tree& other)
+Tree::Tree(const Tree& other) : start(NULL)
 {
 	copyOther(other);
 }
@@ -55,6 +55,7 @@ void Tree::copyOther(const Tree& other)
 void Tree::clear()
 {
 	clearFrom(start);
+	start = NULL;
 }
 
 // pushFrom

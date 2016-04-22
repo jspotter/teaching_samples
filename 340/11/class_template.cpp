@@ -1,9 +1,7 @@
 #include <cstdlib>
 #include <iostream>
-#include "myvector.h"
 using namespace std;
 
-/*
 template <typename T>
 class MyVector
 {
@@ -39,26 +37,25 @@ private:
 	int currentSize;
 	int capacity;
 };
-*/
 
 int main()
 {
 	MyVector<int> intVector;
-	// MyVector<string> stringVector;
+	MyVector<string> stringVector;
 
 	intVector.push_back(3);
 	intVector.push_back(4);
 
-	//stringVector.push_back("hi");
-	//stringVector.push_back("bye");
+	stringVector.push_back("hi");
+	stringVector.push_back("bye");
 
 	for (int i = 0; i < intVector.size(); i++) {
 		cout << intVector[i] << endl;
 	}
 
-	//for (int i = 0; i < stringVector.size(); i++) {
-	//	cout << stringVector[i] << endl;
-	//}
+	for (int i = 0; i < stringVector.size(); i++) {
+		cout << stringVector[i] << endl;
+	}
 
 	return 0;
 }

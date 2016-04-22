@@ -4,7 +4,10 @@
 #include <vector>
 using namespace std;
 
-bool IsOdd(int i)
+// We can pass isOdd as the last argument
+// to count_if, or we can pass an anonymous
+// lambda function.
+bool isOdd(int i)
 {
 	return i % 2 == 1;
 }
@@ -16,9 +19,14 @@ int main()
 		myVector.push_back(i * 3);
 	}
 
-	int myArray[] = { 0, 3, 6, 9, 12, 15, 18, 21, 24, 27 };
-
-	int count = count_if(myArray, myArray + 5, IsOdd);
+	int count = count_if(
+	    myVector.begin(), 
+		myVector.end(), 
+		[] (int i) -> bool {
+		cout << "whoa i'm inside an anonymous function" 
+			<< endl;
+		return i % 2 == 1; 
+	});
 	cout << count << " odd numbers" << endl;
 
 	return 0;
