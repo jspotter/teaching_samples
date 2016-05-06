@@ -28,7 +28,8 @@ int main()
 	cout << "s1: " << s1 << ", s2: " << s2 << endl;
 
 	double d = 6.3;
-	cout << convert<double, int>(d) << endl;
+	char c = 'a';
+	cout << convert<char, int>(c) << endl;
 
 	return 0;
 }

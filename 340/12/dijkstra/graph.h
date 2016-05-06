@@ -6,7 +6,7 @@
 #include <vector>
 #include <unordered_set>
 #include <unordered_map>
-#include <deque>
+#include <queue>
 #include <stdexcept>
 
 /*
@@ -49,20 +49,8 @@ public:
 	Node(const T& value) : value(value) {}
 
 	/*
-	 * Why wouldn't this do what we want?
-	 *
-	 * Hint: what is the new node connected to?
-	 */
-	/*
-
-	Node<T>* copy(const Node& other) {
-		return new Node<T>(value);
-	}
-
-	*/
-	
-	/*
-	 * Why not a vector for the list of adjacent
+	 * Why is an unordered_set better than
+	 * a vector for the list of adjacent
 	 * nodes?
 	 */
 	std::unordered_set<Node<T>*> adjacents;
@@ -74,9 +62,13 @@ public:
  * Graph
  * -----
  * Represents a bi-directional (undirected)
- * graph. Nodes can have any value. The
- * graph does not have to be connected. Values
- * must be unique.
+ * graph. Nodes can have values of any type,
+ * so long as that type:
+ *   - can be used as a key in a map, and;
+ *   - can be inserted into cout.
+ *
+ * The graph does not have to be connected.
+ * Values must be unique.
  */
 template <typename T>
 class Graph
@@ -138,6 +130,8 @@ public:
 		connect(nodes[first], nodes[second]);
 	}
 
+	// Unmarks all nodes. Important for the shortest
+	// path algorithm!
 	void unmarkAll() {
 		for (auto iter = nodes.begin();
 		     iter != nodes.end();
@@ -146,6 +140,9 @@ public:
 		}
 	}
 
+	// Prints a list of nodes in the graph, and
+	// prints a list of adjacent nodes next to each
+	// node.
 	void print() {
 		for (auto iter = nodes.begin();
 		     iter != nodes.end();
@@ -176,18 +173,17 @@ public:
 		// path as a vector of node pointers, since this
 		// is what you will ultimately be returning.
 		//
-		// I would ALSO recommend using a deque to store
-		// all your partial paths. (A deque is
-		// shorthand for double-ended queue. It's part
-		// of the STL.
+		// I would ALSO recommend using a queue to store
+		// all your partial paths.
 		//
-		// If you choose to use a deque (which you should),
-		// you'll have a deque of vectors, where each vector
+		// If you choose to use a queue (which you should),
+		// you'll have a queue of vectors, where each vector
 		// in turn contains node pointers. Kind of
 		// complicated! But effective!
 
 
-		// Don't forget to unmark your nodes!
+		// Don't forget to unmark all your nodes at the
+		// beginning!
 
 
 		// Your first partial path will just contain one
@@ -207,10 +203,9 @@ public:
 		//    4. Store those partial paths at the end.
 		//
 		// You stop when:
-		//    - You see the end node in step 2. Put the
-		//      end node at the end of the current partial
-		//      path, and then return the partial (now
-		//      complete) path!
+		//    - You see the destination node at the end of
+		//      the partial path you just removed from
+		//      the queue. You can just return this path.
 		//    - You run out of partial paths to look at.
 		//      If this ever happens, that means there is
 		//      no path to the end node. Throw the 
@@ -226,12 +221,17 @@ private:
 	std::unordered_map<T, Node<T>*> nodes;  // for uniqueness and lookup
 
 	void copyOther(const Graph<T>& other) {
+	
+		// First, insert each node as an island
+		// (no edges yet).
 		for (auto iter = other.nodes.begin();
 		     iter != other.nodes.end();
 				 iter++) {
 			insert(iter->first);
 		}
 
+		// Then, connect each pair of nodes that
+		// has an edge in the other graph.
 		for (auto iter = other.nodes.begin();
 		     iter != other.nodes.end();
 				 iter++) {
